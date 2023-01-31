@@ -1,3 +1,5 @@
+import time
+
 from pages.base_page import BasePage
 
 
@@ -19,9 +21,19 @@ class Dashboard(BasePage):
     reports_count_xpath = "(//b)[3]"
     events_count_xpath = "(//b)[4]"
     dev_team_contact_xpath = "//*[@title='Logo Scouts Panel']//following::a"
-    add_player_xpath = "//a[ends-with(@href, '/players/add')]"
+    add_player_xpath = "//a[contains(@href, '/players/add')]"
     last_created_player_link_xpath = "(//a[contains(@href, 'edit')])[1]"
     last_updated_player_link_xpath = "(//a[contains(@href, 'edit')])[2]"
     last_created_match_link_xpath = "(//a[contains(@href, 'edit')])[3]"
     last_updated_match_link_xpath = "(//a[contains(@href, 'edit')])[4]"
     last_updated_report_link_xpath = "(//a[contains(@href, 'edit')])[5]"
+
+    expected_title = "Scouts panel"
+    dashboard_url = 'https://scouts-test.futbolkolektyw.pl/'
+
+    def title_of_page(self):
+        time.sleep(4)
+        assert self.get_page_title(self.dashboard_url) == self.expected_title
+
+    def click_add_new_player_button(self):
+        self.click_on_the_element(self.add_player_xpath)
